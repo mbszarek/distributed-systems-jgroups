@@ -13,12 +13,8 @@ class CommandLineInterface(map: DistributedMap) {
 
   private def loop(): Task[Unit] = for {
     line <- readLine()
-    _ <- if (line != ":q") {
-      for {
-        _ <- matchLine(line)
-        _ <- loop()
-      } yield ()
-    } else Task.unit
+    _ <- matchLine(line)
+    _ <- loop()
   } yield ()
 
   private def readLine(): Task[String] = Task.eval {

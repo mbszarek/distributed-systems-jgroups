@@ -118,7 +118,7 @@ class DistributedMap private(jChannel: JChannel) extends ReceiverAdapter with Si
 }
 
 object DistributedMap {
-  def empty(address: String): DistributedMap = {
+  def empty(address: String): Task[DistributedMap] = Task.eval {
     val jChannel = new JChannel(false)
     val protocolStack = new ProtocolStack()
       .addProtocol(new UDP().setValue("mcast_group_addr", InetAddress.getByName(address)))
